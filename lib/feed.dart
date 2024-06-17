@@ -61,7 +61,7 @@ class _FeedState extends State<Feed> {
           ],
         ),
       ),
-      drawer: Filtro(),
+      drawer: const Filtro(),
       endDrawer: ( //menu
         Drawer(child: ListView(
             padding: EdgeInsets.zero,
@@ -171,7 +171,7 @@ class _FeedState extends State<Feed> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PostPage1()),
+                        MaterialPageRoute(builder: (context) => const PostPage1()),
                       );
                     },
                   ),
@@ -185,7 +185,7 @@ class _FeedState extends State<Feed> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PostPage1()),
+                        MaterialPageRoute(builder: (context) => const PostPage1()),
                       );
                     },
                   ),
@@ -226,7 +226,7 @@ class _FeedState extends State<Feed> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PerfilPage()),
+                        MaterialPageRoute(builder: (context) => const PerfilPage()),
                       );
                     },
                   ),
@@ -234,7 +234,7 @@ class _FeedState extends State<Feed> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PerfilPage()),
+                        MaterialPageRoute(builder: (context) => const PerfilPage()),
                       );
                     },
                     child: Text(

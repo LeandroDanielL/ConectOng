@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-
 class LojaScreen extends StatefulWidget {
+  const LojaScreen({super.key});
+
   @override
   _LojaScreenState createState() => _LojaScreenState();
 }
 
 class _LojaScreenState extends State<LojaScreen> {
   final List<Map<String, dynamic>> _itens = [
-    {'nome': 'Kit de Alimentos', 'preco': 62, 'imagem': 'assets/kit_alimentos.png', 'quantidade': 1},
-    {'nome': 'Kit de Higiene Completo', 'preco': 72, 'imagem': 'assets/kit_higiene_completo.png', 'quantidade': 1},
-    {'nome': 'Kit Higiene Feminino', 'preco': 36, 'imagem': 'assets/kit_higiene_feminino.png', 'quantidade': 1},
-    {'nome': 'Kit Higiene Masculino', 'preco': 29, 'imagem': 'assets/kit_higiene_masculino.png', 'quantidade': 1},
+    {'nome': 'Kit de Alimentos', 'preco': 123, 'imagem': 'assets/images/kit_alimentos.png', 'quantidade': 1},
+    {'nome': 'Kit de Higiene Completo', 'preco': 72, 'imagem': 'assets/images/kit_higiene_completo.png', 'quantidade': 1},
+    {'nome': 'Kit Higiene Feminino', 'preco': 36, 'imagem': 'assets/images/kit_higiene_feminino.png', 'quantidade': 1},
+    {'nome': 'Kit Higiene Masculino', 'preco': 29, 'imagem': 'assets/images/kit_higiene_masculino.png', 'quantidade': 1},
+    {'nome': 'Kit Ração Cao', 'preco': 97, 'imagem': 'assets/images/kit_racao_cao.png', 'quantidade': 1},
+    {'nome': 'Kit Ração Gato', 'preco': 140, 'imagem': 'assets/images/kit_racao_gato.png', 'quantidade': 1},
   ];
 
   final List<Map<String, dynamic>> _carrinho = [];
@@ -36,14 +39,14 @@ class _LojaScreenState extends State<LojaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lojinha'),
+        title: const Text('Lojinha'),
         actions: [
           Builder(
             builder: (context) => Stack(
               alignment: Alignment.center,
               children: [
                 IconButton(
-                  icon: Icon(Icons.shopping_cart),
+                  icon: const Icon(Icons.shopping_cart),
                   onPressed: () => Scaffold.of(context).openEndDrawer(),
                 ),
                 if (_carrinho.isNotEmpty)
@@ -51,18 +54,18 @@ class _LojaScreenState extends State<LojaScreen> {
                     right: 8,
                     top: 8,
                     child: Container(
-                      padding: EdgeInsets.all(2), //pra deixar 2x2
+                      padding: const EdgeInsets.all(2), //pra deixar 2x2
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 16,
                         minHeight: 16,
                       ),
                       child: Text(
                         '${_carrinho.length}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),
@@ -77,7 +80,7 @@ class _LojaScreenState extends State<LojaScreen> {
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 2 / 3,
           crossAxisSpacing: 10,
@@ -100,7 +103,7 @@ class _LojaScreenState extends State<LojaScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     item['nome'],
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -108,14 +111,14 @@ class _LojaScreenState extends State<LojaScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     'R\$ ${item['preco']}',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    child: Text('Comprar'),
+                    child: const Text('Comprar'),
                     onPressed: () => _adicionarAoCarrinho(item),
                   ),
                 ),
@@ -127,7 +130,7 @@ class _LojaScreenState extends State<LojaScreen> {
       endDrawer: Drawer(
         child: Column(
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               child: Text('Carrinho de Compras', style: TextStyle(fontSize: 24)),
             ),
             Expanded(
@@ -139,7 +142,7 @@ class _LojaScreenState extends State<LojaScreen> {
                     title: Text(item['nome']),
                     subtitle: Text('R\$ ${item['preco']}'),
                     trailing: IconButton(
-                      icon: Icon(Icons.remove_circle),
+                      icon: const Icon(Icons.remove_circle),
                       onPressed: () => _removerDoCarrinho(index),
                     ),
                   );
@@ -150,13 +153,13 @@ class _LojaScreenState extends State<LojaScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Total: R\$ ${_calcularTotal().toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
-                child: Text('Confirmar Compra'),
+                child: const Text('Confirmar Compra'),
                 onPressed: () {
                   // Lógica de confirmação da compra
                 },
