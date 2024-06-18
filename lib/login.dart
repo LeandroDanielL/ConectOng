@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:fluther/servicos/autenticacao_servicos.dart';
 import 'package:fluther/snackbar.dart';
-import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             controller: _emailController,
                             validator: (String? value) {
-                              if (value == null) {
+                              if (value == null || value.isEmpty) {
                                 return 'O E-mail não pode ser vazio';
                               }
                               if (value.length < 5) {
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             controller: _senhaController,
                             validator: (String? value) {
-                              if (value == null) {
+                              if (value == null || value.isEmpty) {
                                 return 'A senha não pode ser vazia';
                               }
                               if (value.length < 8) {
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                 TextFormField(
                                   controller: _nomeController,
                                   validator: (String? value) {
-                                    if (value == null) {
+                                    if (value == null || value.isEmpty) {
                                       return entrarComoOng
                                           ? 'O nome da ONG não pode ser vazio'
                                           : 'O nome não pode ser vazio';
@@ -203,14 +203,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  botaoPrincipalClicado() {
+  void botaoPrincipalClicado() {
     String nome = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
 
     if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
-        print("entrada validada ");
         _autenServico.logarUsuarios(email: email, senha: senha).then(
           (String? erro) {
             if (erro != null) {
@@ -222,12 +221,7 @@ class _LoginPageState extends State<LoginPage> {
           },
         );
       } else {
-        print("cadastro validado ");
-        print(
-            "${_emailController.text}, ${_nomeController.text}, ${_senhaController.text},");
-        _autenServico
-            .cadastrarUsuario(nome: nome, senha: senha, email: email)
-            .then(
+        _autenServico.cadastrarUsuario(nome: nome, senha: senha, email: email).then(
           (String? erro) {
             if (erro != null) {
               // Voltou com erro

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+class PerfilPage1 extends StatefulWidget {
+  final int authorId;
 
-class PerfilPage extends StatefulWidget {
-  const PerfilPage({super.key});
+  PerfilPage1({required this.authorId});
 
   @override
-  _PerfilPageState createState() => _PerfilPageState();
+  _PerfilPage1State createState() => _PerfilPage1State();
 }
 
-class _PerfilPageState extends State<PerfilPage> {
+class _PerfilPage1State extends State<PerfilPage1> {
   bool _isFollowing = false;
   int _followersCount = 2489; // Exemplo de contagem de seguidores
 
@@ -29,24 +30,24 @@ class _PerfilPageState extends State<PerfilPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 0.5,
                       blurRadius: 5,
-                      offset: const Offset(0, 3),
+                      offset: Offset(0, 3),
                     ),
                   ],
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Pesquisar",
                     hintStyle: TextStyle(color: Colors.grey),
@@ -58,43 +59,48 @@ class _PerfilPageState extends State<PerfilPage> {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [           
+          children: [
             Divider(height: 10, thickness: 2, color: Colors.grey[300]),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('assets/images/author1.png'),
                   ),
-                  const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Nome do Usuário',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        '$_followersCount Seguidores',
-                        style: const TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        'Breve descrição do usuário...',
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    ],
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Projeto Cãomer',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          '$_followersCount Seguidores',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Cães e gatos para adoção responsável! 100% voluntário.',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -104,41 +110,36 @@ class _PerfilPageState extends State<PerfilPage> {
               child: ElevatedButton(
                 onPressed: _toggleFollow,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFollowing ? const Color.fromARGB(255, 76, 158, 175) : null,
+                  backgroundColor: _isFollowing
+                      ? const Color.fromARGB(255, 76, 158, 175)
+                      : null,
                 ),
                 child: Text(_isFollowing ? 'Seguindo' : 'Seguir'),
               ),
             ),
-            const Divider(height: 20, thickness: 2),
+            Divider(height: 20, thickness: 2),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Posts',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: 20),
                   _buildPost(
                     image: 'assets/images/post1.png',
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                    likes: 10,
-                    comments: 5,
-                  ), 
-                  const SizedBox(height: 20),
-                  _buildPost(
-                    image: 'assets/images/post1.png',
-                    text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    likes: 15,
-                    comments: 8,
+                    text: 'Campanha: Doação!',
+                    likes: 123,
+                    comments: 45,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   _buildPost(
-                    image: 'assets/images/post3.jpg',
-                    text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                    likes: 20,
-                    comments: 12,
+                    image: 'assets/images/post6.png',
+                    text: 'Zé Ramalho está a procura de um abrigo',
+                    likes: 188,
+                    comments: 57,
                   ),
                 ],
               ),
@@ -160,7 +161,7 @@ class _PerfilPageState extends State<PerfilPage> {
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +175,7 @@ class _PerfilPageState extends State<PerfilPage> {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               text,
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18),
             ),
           ),
           Padding(
@@ -185,29 +186,29 @@ class _PerfilPageState extends State<PerfilPage> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.favorite_border),
+                      icon: Icon(Icons.favorite_border),
                       onPressed: () {
                         // Lógica de curtir o post
                       },
                     ),
-                    const SizedBox(width: 5),
+                    SizedBox(width: 5),
                     Text('$likes Likes'),
                   ],
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.chat_bubble_outline),
+                      icon: Icon(Icons.chat_bubble_outline),
                       onPressed: () {
                         // Lógica de comentar no post
                       },
                     ),
-                    const SizedBox(width: 5),
+                    SizedBox(width: 5),
                     Text('$comments Comentários'),
                   ],
                 ),
                 IconButton(
-                  icon: const Icon(Icons.share),
+                  icon: Icon(Icons.share),
                   onPressed: () {
                     // Lógica de compartilhar o post
                   },
