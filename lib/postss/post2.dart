@@ -1,7 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+class PostPage2 extends StatefulWidget {
+  @override
+  _PostPage2State createState() => _PostPage2State();
+}
 
-class PostPage2 extends StatelessWidget {
+class _PostPage2State extends State<PostPage2> {
+  int likes = 123;
+  bool isLiked = false;
+  List<Map<String, String>> comments = [
+    {'name': 'João Silva', 'comment': 'Muito bom!'},
+    {'name': 'Maria Souza', 'comment': 'Adorei a iniciativa!'},
+    {'name': 'Carlos Pereira', 'comment': 'Como posso participar?'}
+  ];
+
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked;
+      likes += isLiked ? 1 : -1;
+    });
+  }
+
+  Future<void> addComment(String comment) async {
+    // Obtém o usuário logado
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String userName = user.displayName ?? 'Anônimo';
+
+      setState(() {
+        comments.add({'name': userName, 'comment': comment});
+      });
+
+     
+    } else {
+      // Handle user not logged in
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Você precisa estar logado para comentar.'),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +103,7 @@ class PostPage2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nome do Autor',
+                    'Alegria É Mato',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -83,7 +122,7 @@ class PostPage2 extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Text(
-            'Título do Post',
+            'Ação social - Distribuição de cestas!',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -91,7 +130,7 @@ class PostPage2 extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Text(
-            'Conteúdo do Post',
+            'Ajudamos diversas famílias com a distribuição de cestas básicas. Participe você também!',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -119,16 +158,57 @@ class PostPage2 extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.thumb_up_alt_outlined),
+                  IconButton(
+                    icon: Icon(
+                      isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                      color: isLiked ? Colors.blue : Colors.black,
+                    ),
+                    onPressed: toggleLike,
+                  ),
                   SizedBox(width: 4),
-                  Text('123'),
+                  Text('$likes'),
                 ],
               ),
               Row(
                 children: [
-                  Icon(Icons.chat_bubble_outline),
+                  IconButton(
+                    icon: Icon(Icons.chat_bubble_outline),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          String comment = '';
+                          return AlertDialog(
+                            title: Text('Adicionar Comentário'),
+                            content: TextField(
+                              onChanged: (value) {
+                                comment = value;
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  if (comment.isNotEmpty) {
+                                    addComment(comment);
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: Text('Adicionar'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                   SizedBox(width: 4),
-                  Text('45'),
+                  Text('${comments.length}'),
                 ],
               ),
               Row(
@@ -140,6 +220,11 @@ class PostPage2 extends StatelessWidget {
               ),
             ],
           ),
+          Divider(height: 10, thickness: 2, color: Colors.grey[300]),
+          ...comments.map((commentData) => ListTile(
+            title: Text(commentData['comment']!),
+            subtitle: Text(commentData['name']!, style: TextStyle(fontWeight: FontWeight.bold)),
+          )),
         ],
       ),
     );

@@ -1,7 +1,47 @@
 import 'package:flutter/material.dart';
-import '../perfis/perfilpage1.dart'; // Importe a página de perfil do autor
+import 'package:firebase_auth/firebase_auth.dart';
+import '../perfis/perfilpage1.dart';
 
-class PostPage1 extends StatelessWidget {
+class PostPage1 extends StatefulWidget {
+  @override
+  _PostPage1State createState() => _PostPage1State();
+}
+
+class _PostPage1State extends State<PostPage1> {
+  int likes = 123;
+  bool isLiked = false;
+  List<Map<String, String>> comments = [
+    {'name': 'João Silva', 'comment': 'Ótima iniciativa!'},
+    {'name': 'Maria Souza', 'comment': 'Como posso ajudar?'},
+    {'name': 'Carlos Pereira', 'comment': 'Parabéns pelo trabalho!'}
+  ];
+
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked;
+      likes += isLiked ? 1 : -1;
+    });
+  }
+
+  Future<void> addComment(String comment) async {
+    // Obtém o usuário logado
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String userName = user.displayName ?? 'Anônimo';
+
+      setState(() {
+        comments.add({'name': userName, 'comment': comment});
+      });
+
+   
+    } else {
+      // Handle user not logged in
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Você precisa estar logado para comentar.'),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,16 +200,57 @@ class PostPage1 extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.thumb_up_alt_outlined),
+                  IconButton(
+                    icon: Icon(
+                      isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                      color: isLiked ? Colors.blue : Colors.black,
+                    ),
+                    onPressed: toggleLike,
+                  ),
                   SizedBox(width: 4),
-                  Text('123'),
+                  Text('$likes'),
                 ],
               ),
               Row(
                 children: [
-                  Icon(Icons.chat_bubble_outline),
+                  IconButton(
+                    icon: Icon(Icons.chat_bubble_outline),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          String comment = '';
+                          return AlertDialog(
+                            title: Text('Adicionar Comentário'),
+                            content: TextField(
+                              onChanged: (value) {
+                                comment = value;
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  if (comment.isNotEmpty) {
+                                    addComment(comment);
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: Text('Adicionar'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                   SizedBox(width: 4),
-                  Text('45'),
+                  Text('${comments.length}'),
                 ],
               ),
               Row(
@@ -181,6 +262,11 @@ class PostPage1 extends StatelessWidget {
               ),
             ],
           ),
+          Divider(height: 10, thickness: 2, color: Colors.grey[300]),
+          ...comments.map((commentData) => ListTile(
+            title: Text(commentData['comment']!),
+            subtitle: Text(commentData['name']!, style: TextStyle(fontWeight: FontWeight.bold)),
+          )),
         ],
       ),
     );
