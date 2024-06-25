@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Filtro extends StatefulWidget {
-  const Filtro({super.key});
+  final ValueNotifier<List<int>> filterNotifier;
+  final List<int> allPostIds;
+
+  const Filtro({super.key, required this.filterNotifier, required this.allPostIds});
 
   @override
   _FiltroState createState() => _FiltroState();
@@ -22,6 +25,26 @@ class _FiltroState extends State<Filtro> {
 
   double distance = 0;
   bool isOngOpen = false;
+
+  List<int> getSelectedIds() {
+    List<int> selectedIds = [];
+    if (categories['Assistência social'] ?? false) {
+      selectedIds.add(2);
+    }
+    if (categories['Ambientais'] ?? false) {
+      selectedIds.add(1);
+    }
+    return selectedIds;
+  }
+
+  void resetFilters() {
+    setState(() {
+      categories.updateAll((key, value) => false);
+      distance = 0;
+      isOngOpen = false;
+      widget.filterNotifier.value = widget.allPostIds;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +107,22 @@ class _FiltroState extends State<Filtro> {
                 isOngOpen = value;
               });
             },
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                widget.filterNotifier.value = getSelectedIds();
+              },
+              child: const Text("Aplicar Filtros"),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: resetFilters,
+              child: const Text("Limpar Filtros"),
+            ),
           ),
         ],
       ),

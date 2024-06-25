@@ -32,7 +32,6 @@ class _PostPage2State extends State<PostPage2> {
         comments.add({'name': userName, 'comment': comment});
       });
 
-     
     } else {
       // Handle user not logged in
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -136,15 +135,38 @@ class _PostPage2State extends State<PostPage2> {
             ),
           ),
           SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: double.infinity,
-              height: 200,
-              color: Colors.grey[300],
-              child: Image.asset(
-                'assets/images/post2.jpg',
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    backgroundColor: Colors.transparent,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        child: Image.asset(
+                          'assets/images/post2.jpg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: double.infinity,
+                height: 200,
+                color: Colors.grey[300],
+                child: Image.asset(
+                  'assets/images/post2.jpg',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

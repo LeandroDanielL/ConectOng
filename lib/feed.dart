@@ -9,15 +9,30 @@ import 'perfis/perfilpage2.dart';
 import 'postss/post1.dart';
 import 'postss/post2.dart';
 
-class Feed extends StatelessWidget {
+class Feed extends StatefulWidget {
   final User user;
+
+  Feed({super.key, required this.user});
+
+  @override
+  _FeedState createState() => _FeedState();
+}
+
+class _FeedState extends State<Feed> {
+  final List<int> allPostIds = [1, 2]; // Lista com todos os IDs de postagens possíveis
+  final ValueNotifier<List<int>> filterNotifier = ValueNotifier<List<int>>([1, 2]);
+
   final Map<int, Widget Function()> authorProfiles = {
     1: () => PerfilPage1(authorId: 1),
     2: () => PerfilPage2(authorId: 2),
     // Adicione mais mapeamentos conforme necessário
   };
 
-  Feed({super.key, required this.user});
+  @override
+  void dispose() {
+    filterNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,72 +81,79 @@ class Feed extends StatelessWidget {
           ],
         ),
       ),
-      drawer: const Filtro(),
+      drawer: Filtro(filterNotifier: filterNotifier, allPostIds: allPostIds),
       endDrawer: _buildEndDrawer(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Divider(height: 10, thickness: 2, color: Colors.grey[300]),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              width: 140,
-              height: 30,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(226, 226, 189, 98),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
+      body: ValueListenableBuilder<List<int>>(
+        valueListenable: filterNotifier,
+        builder: (context, selectedIds, child) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Divider(height: 10, thickness: 2, color: Colors.grey[300]),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  width: 140,
+                  height: 30,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(226, 226, 189, 98),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Text(
-                'Recomendados',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  child: Text(
+                    'Recomendados',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-              ),
+                if (selectedIds.contains(1))
+                  _buildPost(
+                    context: context,
+                    authorId: 1,
+                    authorName: 'Projeto Cãomer',
+                    timeAgo: '3h',
+                    postTitle: 'Campanha: Doação!',
+                    postImage: 'assets/images/post1.png',
+                    authorImage: 'assets/images/author1.png',
+                    profileBuilder: authorProfiles[1]!,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PostPage1()),
+                      );
+                    },
+                  ),
+                if (selectedIds.contains(2))
+                  _buildPost(
+                    context: context,
+                    authorId: 2,
+                    authorName: 'Alegria É Mato',
+                    timeAgo: '2d',
+                    postTitle: 'Ação social - Distribuição de cestas!',
+                    postImage: 'assets/images/post2.jpg',
+                    authorImage: 'assets/images/author2.jpg',
+                    profileBuilder: authorProfiles[2]!,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PostPage2()),
+                      );
+                    },
+                  ),
+              ],
             ),
-            _buildPost(
-              context: context,
-              authorId: 1,
-              authorName: 'Projeto Cãomer',
-              timeAgo: '3h',
-              postTitle: 'Campanha: Doação!',
-              postImage: 'assets/images/post1.png',
-              authorImage: 'assets/images/author1.png',
-              profileBuilder: authorProfiles[1]!,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PostPage1()),
-                );
-              },
-            ),
-            _buildPost(
-              context: context,
-              authorId: 2,
-              authorName: 'Alegria É Mato',
-              timeAgo: '2d',
-              postTitle: 'Ação social - Distribuição de cestas!',
-              postImage: 'assets/images/post2.jpg',
-              authorImage: 'assets/images/author2.jpg',
-              profileBuilder: authorProfiles[2]!,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PostPage2()),
-                );
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -142,8 +164,8 @@ class Feed extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text((user.displayName != null) ? user.displayName! : ""),
-            accountEmail: Text(user.email!),
+            accountName: Text((widget.user.displayName != null) ? widget.user.displayName! : ""),
+            accountEmail: Text(widget.user.email!),
             currentAccountPicture: CircleAvatar(
               child: Icon(
                 Icons.account_circle_outlined,
@@ -282,9 +304,7 @@ class Feed extends StatelessWidget {
               ),
               SizedBox(height: 8),
               GestureDetector(
-                onTap: () {
-                  _showImageDialog(context, postImage);
-                },
+                onTap: onTap,
                 child: Container(
                   height: 200.0,
                   decoration: BoxDecoration(
@@ -301,32 +321,6 @@ class Feed extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _showImageDialog(BuildContext context, String imagePath) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: Colors.black.withOpacity(0.8),
-            child: Center(
-              child: Hero(
-                tag: imagePath,
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
