@@ -1,19 +1,17 @@
-import 'package:fluther/postss/post2.dart';
-import 'package:fluther/postss/post4.dart';
 import 'package:flutter/material.dart';
 
-class PerfilPage2 extends StatefulWidget {
+class PerfilPage3 extends StatefulWidget {
   final int authorId;
 
-  PerfilPage2({required this.authorId});
+  PerfilPage3({required this.authorId});
 
   @override
-  _PerfilPage2State createState() => _PerfilPage2State();
+  _PerfilPage3State createState() => _PerfilPage3State();
 }
 
-class _PerfilPage2State extends State<PerfilPage2> {
+class _PerfilPage3State extends State<PerfilPage3> {
   bool _isFollowing = false;
-  int _followersCount = 1500; // Exemplo de contagem de seguidores
+  int _followersCount = 3400; // Exemplo de contagem de seguidores
 
   void _toggleFollow() {
     setState(() {
@@ -77,7 +75,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/images/author2.jpg'),
+                    backgroundImage: AssetImage('assets/images/PerfilPage3.jpg'),
                   ),
                   SizedBox(width: 20),
                   Expanded(
@@ -85,7 +83,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Alegria É Mato',
+                          'Sopão Solidário',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -98,7 +96,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Plantamos alegria e colhemos solidariedade!',
+                          'Descrição do perfil Sopão Solidário.',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
@@ -131,31 +129,17 @@ class _PerfilPage2State extends State<PerfilPage2> {
                   ),
                   SizedBox(height: 20),
                   _buildPost(
-                    context: context,
-                    image: 'assets/images/post2.jpg',
-                    text: 'Ação social - Distribuição de cestas!',
-                    likes: 123,
-                    comments: 45,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PostPage2()),
-                      );
-                    },
+                    image: 'assets/images/post5.jpeg',
+                    text: 'Campanha de arrecadação! Estamos arrecadando alimentos para ajudar nossos irmãos do Rio Grande do Sul. É uma tragédia a situação que se encontra nas regiões inundadas e, por isso, estamos recebendo doações que serão enviadas para colegas operando na região. Agradecemos pela sua ajuda!',
+                    likes: 150,
+                    comments: 30,
                   ),
                   SizedBox(height: 20),
                   _buildPost(
-                    context: context,
-                    image: 'assets/images/post4.jpg',
-                    text: 'Mais uma vez, MUITO OBRIGADA a todos que nos ajudam… seguimos plantando pequenas sementinhas e fazendo colheitas super especiais!',
-                    likes: 250,
-                    comments: 80,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PostPage4()),
-                      );
-                    },
+                    image: 'assets/images/post6.jpg',
+                    text: 'A Força do Voluntariado: Nossos voluntários são a espinha dorsal de nossas ações! Com imensa generosidade, eles dedicam seu tempo e energia para transformar a vida de muitas pessoas. Cada gesto de carinho e cada hora doada fazem a diferença e ajudam a construir um futuro melhor para todos. Junte-se a nós e descubra como você também pode fazer parte dessa corrente do bem!',
+                    likes: 200,
+                    comments: 40,
                   ),
                 ],
               ),
@@ -166,78 +150,74 @@ class _PerfilPage2State extends State<PerfilPage2> {
     );
   }
 
+
   Widget _buildPost({
-    required BuildContext context,
     required String image,
     required String text,
     required int likes,
     required int comments,
-    required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[300]!),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: EdgeInsets.only(bottom: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              image,
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[300]!),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            image,
+            width: double.infinity,
+            height: 300,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 18),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                text,
-                style: TextStyle(fontSize: 18),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.favorite_border),
+                      onPressed: () {
+                        // Lógica de curtir o post
+                      },
+                    ),
+                    SizedBox(width: 5),
+                    Text('$likes Likes'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.chat_bubble_outline),
+                      onPressed: () {
+                        // Lógica de comentar no post
+                      },
+                    ),
+                    SizedBox(width: 5),
+                    Text('$comments Comentários'),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    // Lógica de compartilhar o post
+                  },
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.favorite_border),
-                        onPressed: () {
-                          // Lógica de curtir o post
-                        },
-                      ),
-                      SizedBox(width: 5),
-                      Text('$likes Likes'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.chat_bubble_outline),
-                        onPressed: () {
-                          // Lógica de comentar no post
-                        },
-                      ),
-                      SizedBox(width: 5),
-                      Text('$comments Comentários'),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.share),
-                    onPressed: () {
-                      // Lógica de compartilhar o post
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

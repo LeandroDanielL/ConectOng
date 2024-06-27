@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../perfis/perfilpage4.dart';
 
-class PostPage2 extends StatefulWidget {
+class PostPage7 extends StatefulWidget {
   @override
-  _PostPage2State createState() => _PostPage2State();
+  _PostPage7State createState() => _PostPage7State();
 }
 
-class _PostPage2State extends State<PostPage2> {
-  int likes = 123;
+class _PostPage7State extends State<PostPage7> {
+  int likes = 180;
   bool isLiked = false;
   List<Map<String, String>> comments = [
-    {'name': 'Leandro Silva', 'comment': 'Muito bom!'},
-    {'name': 'Vitor Souza', 'comment': 'Adorei a iniciativa!'},
-    {'name': 'Eduardo Pereira', 'comment': 'Como posso participar?'}
+    {'name': 'Mariana Silva', 'comment': 'Muito importante!'},
+    {'name': 'João Souza', 'comment': 'Vou participar!'},
+    {'name': 'Lucas Pereira', 'comment': 'Excelente iniciativa!'}
   ];
 
   void toggleLike() {
@@ -31,7 +32,6 @@ class _PostPage2State extends State<PostPage2> {
       setState(() {
         comments.add({'name': userName, 'comment': comment});
       });
-
     } else {
       // Handle user not logged in
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -83,45 +83,63 @@ class _PostPage2State extends State<PostPage2> {
         padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
         children: [
           Divider(height: 10, thickness: 2, color: Colors.grey[300]),
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/author2.jpg'),
-                    fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              // Navegar para o perfil do autor
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PerfilPage4(authorId: 123)), // Substitua 123 pelo ID do autor
+              );
+            },
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[300],
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/PerfilPage4.jpg'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Alegria É Mato',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar para o perfil do autor
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PerfilPage4(authorId: 1)), // Substitua 123 pelo ID do autor
+                        );
+                      },
+                      child: Text(
+                        'Instituto Macunaíma',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '2 dias atrás',
-                    style: TextStyle(
-                      color: Colors.grey,
+                    SizedBox(height: 4),
+                    Text(
+                      'A 3 horas',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 16),
           Text(
-            'Ação social - Distribuição de cestas!',
+            'Palestra Magna: Combate ao Racismo',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -129,7 +147,7 @@ class _PostPage2State extends State<PostPage2> {
           ),
           SizedBox(height: 16),
           Text(
-            'Ajudamos diversas famílias com a distribuição de cestas básicas. Participe você também!',
+            'Uma conversa essencial para promover a igualdade! Como parte do projeto Negritude-se, o Instituto apresenta a Palestra Magna "Combate ao racismo: da teoria à prática cotidiana" com Bruno Egonu. O evento é gratuito e acontecerá na PUC Barreiro essa sexta.',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -148,7 +166,7 @@ class _PostPage2State extends State<PostPage2> {
                       },
                       child: Container(
                         child: Image.asset(
-                          'assets/images/post2.jpg',
+                          'assets/images/post7.jpg',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -164,7 +182,7 @@ class _PostPage2State extends State<PostPage2> {
                 height: 200,
                 color: Colors.grey[300],
                 child: Image.asset(
-                  'assets/images/post2.jpg',
+                  'assets/images/post7.jpg',
                   fit: BoxFit.cover,
                 ),
               ),

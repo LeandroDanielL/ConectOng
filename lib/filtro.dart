@@ -14,13 +14,11 @@ class _FiltroState extends State<Filtro> {
   Map<String, bool> categories = {
     'Assistência social': false,
     'Sem teto': false,
-    'Educativas': false,
+    'Animais': false,
     'Cultura': false,
     'Ambientais': false,
     'Saúde': false,
     'Direitos humanos': false,
-    'Habitação': false,
-    'Paz e conflitos': false,
   };
 
   double distance = 0;
@@ -29,10 +27,16 @@ class _FiltroState extends State<Filtro> {
   List<int> getSelectedIds() {
     List<int> selectedIds = [];
     if (categories['Assistência social'] ?? false) {
-      selectedIds.add(2);
+      selectedIds.addAll([5, 6, 9]); // IDs dos posts relacionados à Assistência social
     }
-    if (categories['Ambientais'] ?? false) {
-      selectedIds.add(1);
+    if (categories['Sem teto'] ?? false) {
+      selectedIds.addAll([2, 4]); // IDs dos posts relacionados à Sem teto
+    }
+    if (categories['Animais'] ?? false) {
+      selectedIds.addAll([1, 3]); // IDs dos posts relacionados à Educativas
+    }
+    if (categories['Cultura'] ?? false) {
+      selectedIds.addAll([7, 8,10]); // IDs dos posts relacionados à Cultura
     }
     return selectedIds;
   }

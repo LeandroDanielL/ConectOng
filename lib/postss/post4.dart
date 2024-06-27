@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../perfis/perfilpage2.dart';
 
-class PostPage2 extends StatefulWidget {
+class PostPage4 extends StatefulWidget {
   @override
-  _PostPage2State createState() => _PostPage2State();
+  _PostPage4State createState() => _PostPage4State();
 }
 
-class _PostPage2State extends State<PostPage2> {
-  int likes = 123;
+class _PostPage4State extends State<PostPage4> {
+  int likes = 250;
   bool isLiked = false;
   List<Map<String, String>> comments = [
-    {'name': 'Leandro Silva', 'comment': 'Muito bom!'},
-    {'name': 'Vitor Souza', 'comment': 'Adorei a iniciativa!'},
-    {'name': 'Eduardo Pereira', 'comment': 'Como posso participar?'}
+    {'name': 'Ana Paula', 'comment': 'Que iniciativa maravilhosa!'},
+    {'name': 'José Carlos', 'comment': 'Como posso ajudar?'},
+    {'name': 'Marina Silva', 'comment': 'Parabéns pelo trabalho!'}
   ];
 
   void toggleLike() {
@@ -31,9 +32,7 @@ class _PostPage2State extends State<PostPage2> {
       setState(() {
         comments.add({'name': userName, 'comment': comment});
       });
-
     } else {
-      // Handle user not logged in
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Você precisa estar logado para comentar.'),
       ));
@@ -83,45 +82,63 @@ class _PostPage2State extends State<PostPage2> {
         padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
         children: [
           Divider(height: 10, thickness: 2, color: Colors.grey[300]),
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/author2.jpg'),
-                    fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              // Navegar para o perfil do autor
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PerfilPage2(authorId: 2)),
+              );
+            },
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[300],
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/author2.jpg'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Alegria É Mato',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar para o perfil do autor
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PerfilPage2(authorId: 2)),
+                        );
+                      },
+                      child: Text(
+                        'Alegria É Mato',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '2 dias atrás',
-                    style: TextStyle(
-                      color: Colors.grey,
+                    SizedBox(height: 4),
+                    Text(
+                      'A 3 dias',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 16),
           Text(
-            'Ação social - Distribuição de cestas!',
+            'Foi dada a largada do nosso Café na rua😋',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -129,7 +146,7 @@ class _PostPage2State extends State<PostPage2> {
           ),
           SizedBox(height: 16),
           Text(
-            'Ajudamos diversas famílias com a distribuição de cestas básicas. Participe você também!',
+            'Mais uma vez, MUITO OBRIGADA a todos que nos ajudam… seguimos plantando pequenas sementinhas e fazendo colheitas super especiais!',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -148,7 +165,7 @@ class _PostPage2State extends State<PostPage2> {
                       },
                       child: Container(
                         child: Image.asset(
-                          'assets/images/post2.jpg',
+                          'assets/images/post4.jpg',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -164,7 +181,7 @@ class _PostPage2State extends State<PostPage2> {
                 height: 200,
                 color: Colors.grey[300],
                 child: Image.asset(
-                  'assets/images/post2.jpg',
+                  'assets/images/post4.jpg',
                   fit: BoxFit.cover,
                 ),
               ),

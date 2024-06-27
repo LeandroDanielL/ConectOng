@@ -1,19 +1,17 @@
-import 'package:fluther/postss/post2.dart';
-import 'package:fluther/postss/post4.dart';
 import 'package:flutter/material.dart';
 
-class PerfilPage2 extends StatefulWidget {
+class PerfilPage4 extends StatefulWidget {
   final int authorId;
 
-  PerfilPage2({required this.authorId});
+  PerfilPage4({required this.authorId});
 
   @override
-  _PerfilPage2State createState() => _PerfilPage2State();
+  _PerfilPage4State createState() => _PerfilPage4State();
 }
 
-class _PerfilPage2State extends State<PerfilPage2> {
+class _PerfilPage4State extends State<PerfilPage4> {
   bool _isFollowing = false;
-  int _followersCount = 1500; // Exemplo de contagem de seguidores
+  int _followersCount = 1280; // Exemplo de contagem de seguidores
 
   void _toggleFollow() {
     setState(() {
@@ -77,7 +75,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/images/author2.jpg'),
+                    backgroundImage: AssetImage('assets/images/PerfilPage4.jpg'),
                   ),
                   SizedBox(width: 20),
                   Expanded(
@@ -85,7 +83,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Alegria É Mato',
+                          'Instituto Macunaíma',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -98,7 +96,7 @@ class _PerfilPage2State extends State<PerfilPage2> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Plantamos alegria e colhemos solidariedade!',
+                          'Descrição do Instituto Macunaíma.',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
@@ -131,31 +129,17 @@ class _PerfilPage2State extends State<PerfilPage2> {
                   ),
                   SizedBox(height: 20),
                   _buildPost(
-                    context: context,
-                    image: 'assets/images/post2.jpg',
-                    text: 'Ação social - Distribuição de cestas!',
-                    likes: 123,
-                    comments: 45,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PostPage2()),
-                      );
-                    },
+                    image: 'assets/images/post7.jpg',
+                    text: 'Palestra Magna: Combate ao Racismo. Uma conversa essencial para promover a igualdade! Como parte do projeto Negritude-se, o Instituto apresenta a Palestra Magna "Combate ao racismo: da teoria à prática cotidiana" com Bruno Egonu. O evento é gratuito e acontecerá na PUC Barreiro essa sexta.',
+                    likes: 180,
+                    comments: 35,
                   ),
                   SizedBox(height: 20),
                   _buildPost(
-                    context: context,
-                    image: 'assets/images/post4.jpg',
-                    text: 'Mais uma vez, MUITO OBRIGADA a todos que nos ajudam… seguimos plantando pequenas sementinhas e fazendo colheitas super especiais!',
-                    likes: 250,
-                    comments: 80,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PostPage4()),
-                      );
-                    },
+                    image: 'assets/images/post8.jpg',
+                    text: 'Relembrando Nossas Conquistas: Para nós, é uma alegria relembrar tudo o que alcançamos no ano passado. Queremos agradecer à comunidade, aos nossos colaboradores e parceiros por todas as vivências e conquistas. Sem cada um de vocês, o Instituto Macunaíma não seria possível. Seguimos juntos!',
+                    likes: 220,
+                    comments: 50,
                   ),
                 ],
               ),
@@ -166,78 +150,74 @@ class _PerfilPage2State extends State<PerfilPage2> {
     );
   }
 
+ 
   Widget _buildPost({
-    required BuildContext context,
     required String image,
     required String text,
     required int likes,
     required int comments,
-    required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[300]!),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: EdgeInsets.only(bottom: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              image,
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[300]!),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            image,
+            width: double.infinity,
+            height: 300,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 18),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                text,
-                style: TextStyle(fontSize: 18),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.favorite_border),
+                      onPressed: () {
+                        // Lógica de curtir o post
+                      },
+                    ),
+                    SizedBox(width: 5),
+                    Text('$likes Likes'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.chat_bubble_outline),
+                      onPressed: () {
+                        // Lógica de comentar no post
+                      },
+                    ),
+                    SizedBox(width: 5),
+                    Text('$comments Comentários'),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    // Lógica de compartilhar o post
+                  },
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.favorite_border),
-                        onPressed: () {
-                          // Lógica de curtir o post
-                        },
-                      ),
-                      SizedBox(width: 5),
-                      Text('$likes Likes'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.chat_bubble_outline),
-                        onPressed: () {
-                          // Lógica de comentar no post
-                        },
-                      ),
-                      SizedBox(width: 5),
-                      Text('$comments Comentários'),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.share),
-                    onPressed: () {
-                      // Lógica de compartilhar o post
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

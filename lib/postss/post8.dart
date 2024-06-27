@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../perfis/perfilpage4.dart';
 
-class PostPage2 extends StatefulWidget {
+class PostPage8 extends StatefulWidget {
   @override
-  _PostPage2State createState() => _PostPage2State();
+  _PostPage8State createState() => _PostPage8State();
 }
 
-class _PostPage2State extends State<PostPage2> {
-  int likes = 123;
+class _PostPage8State extends State<PostPage8> {
+  int likes = 220;
   bool isLiked = false;
   List<Map<String, String>> comments = [
-    {'name': 'Leandro Silva', 'comment': 'Muito bom!'},
-    {'name': 'Vitor Souza', 'comment': 'Adorei a iniciativa!'},
-    {'name': 'Eduardo Pereira', 'comment': 'Como posso participar?'}
+    {'name': 'Paula Andrade', 'comment': 'Que conquistas maravilhosas!'},
+    {'name': 'Ricardo Silva', 'comment': 'Parabéns a todos!'},
+    {'name': 'Bianca Costa', 'comment': 'Orgulho de fazer parte!'}
   ];
 
   void toggleLike() {
@@ -31,7 +32,6 @@ class _PostPage2State extends State<PostPage2> {
       setState(() {
         comments.add({'name': userName, 'comment': comment});
       });
-
     } else {
       // Handle user not logged in
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -83,45 +83,63 @@ class _PostPage2State extends State<PostPage2> {
         padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
         children: [
           Divider(height: 10, thickness: 2, color: Colors.grey[300]),
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/author2.jpg'),
-                    fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              // Navegar para o perfil do autor
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PerfilPage4(authorId: 123)), // Substitua 123 pelo ID do autor
+              );
+            },
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[300],
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/PerfilPage4.jpg'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Alegria É Mato',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar para o perfil do autor
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PerfilPage4(authorId: 1)), // Substitua 123 pelo ID do autor
+                        );
+                      },
+                      child: Text(
+                        'Instituto Macunaíma',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '2 dias atrás',
-                    style: TextStyle(
-                      color: Colors.grey,
+                    SizedBox(height: 4),
+                    Text(
+                      'A 3 horas',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 16),
           Text(
-            'Ação social - Distribuição de cestas!',
+            'Relembrando Nossas Conquistas',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -129,7 +147,7 @@ class _PostPage2State extends State<PostPage2> {
           ),
           SizedBox(height: 16),
           Text(
-            'Ajudamos diversas famílias com a distribuição de cestas básicas. Participe você também!',
+            'Para nós, é uma alegria relembrar tudo o que alcançamos no ano passado. Queremos agradecer à comunidade, aos nossos colaboradores e parceiros por todas as vivências e conquistas. Sem cada um de vocês, o Instituto Macunaíma não seria possível. Seguimos juntos!',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -148,7 +166,7 @@ class _PostPage2State extends State<PostPage2> {
                       },
                       child: Container(
                         child: Image.asset(
-                          'assets/images/post2.jpg',
+                          'assets/images/post8.jpg',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -164,7 +182,7 @@ class _PostPage2State extends State<PostPage2> {
                 height: 200,
                 color: Colors.grey[300],
                 child: Image.asset(
-                  'assets/images/post2.jpg',
+                  'assets/images/post8.jpg',
                   fit: BoxFit.cover,
                 ),
               ),

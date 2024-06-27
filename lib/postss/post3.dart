@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../perfis/perfilpage1.dart';
 
-class PostPage2 extends StatefulWidget {
+class PostPage3 extends StatefulWidget {
   @override
-  _PostPage2State createState() => _PostPage2State();
+  _PostPage3State createState() => _PostPage3State();
 }
 
-class _PostPage2State extends State<PostPage2> {
-  int likes = 123;
+class _PostPage3State extends State<PostPage3> {
+  int likes = 188;
   bool isLiked = false;
   List<Map<String, String>> comments = [
-    {'name': 'Leandro Silva', 'comment': 'Muito bom!'},
-    {'name': 'Vitor Souza', 'comment': 'Adorei a iniciativa!'},
-    {'name': 'Eduardo Pereira', 'comment': 'Como posso participar?'}
+    {'name': 'Ana Clara', 'comment': 'Que lindo! Espero que ele encontre um lar.'},
+    {'name': 'Carlos Alberto', 'comment': 'Como posso adotar?'},
+    {'name': 'Mariana Lima', 'comment': 'Parabéns pelo trabalho!'}
   ];
 
   void toggleLike() {
@@ -31,9 +32,8 @@ class _PostPage2State extends State<PostPage2> {
       setState(() {
         comments.add({'name': userName, 'comment': comment});
       });
-
     } else {
-      // Handle user not logged in
+      // Caso o usuario n estivesse logado
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Você precisa estar logado para comentar.'),
       ));
@@ -83,45 +83,63 @@ class _PostPage2State extends State<PostPage2> {
         padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
         children: [
           Divider(height: 10, thickness: 2, color: Colors.grey[300]),
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/author2.jpg'),
-                    fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              // Navegar para o perfil do autor
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PerfilPage1(authorId: 1)),
+              );
+            },
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[300],
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/author1.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Alegria É Mato',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar para o perfil do autor
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PerfilPage1(authorId: 1)),
+                        );
+                      },
+                      child: Text(
+                        'Projeto Cãomer',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '2 dias atrás',
-                    style: TextStyle(
-                      color: Colors.grey,
+                    SizedBox(height: 4),
+                    Text(
+                      'Há 1 dia',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 16),
           Text(
-            'Ação social - Distribuição de cestas!',
+            'Campanha de Adoção!',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -129,7 +147,7 @@ class _PostPage2State extends State<PostPage2> {
           ),
           SizedBox(height: 16),
           Text(
-            'Ajudamos diversas famílias com a distribuição de cestas básicas. Participe você também!',
+            'Olá pessoal!! Sou mais um dos filhotes MPB, meu nome é Zé Ramalho. Estou aqui no abrigo com meus irmãos a procura de um lar... Apesar da pouca idade, já sofremos bastante nas ruas! Será que um de vocês podem me levar pra casa e me dar um lar com muito amor? Tenho três meses de idade e serei porte médio ❤️',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -148,7 +166,7 @@ class _PostPage2State extends State<PostPage2> {
                       },
                       child: Container(
                         child: Image.asset(
-                          'assets/images/post2.jpg',
+                          'assets/images/post3.jpg',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -164,7 +182,7 @@ class _PostPage2State extends State<PostPage2> {
                 height: 200,
                 color: Colors.grey[300],
                 child: Image.asset(
-                  'assets/images/post2.jpg',
+                  'assets/images/post3.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
