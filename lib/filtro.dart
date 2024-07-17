@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluther/constantes.dart';
 
 class Filtro extends StatefulWidget {
   final ValueNotifier<List<int>> filterNotifier;
@@ -11,15 +12,8 @@ class Filtro extends StatefulWidget {
 }
 
 class _FiltroState extends State<Filtro> {
-  Map<String, bool> categories = {
-    'Assistência social': false,
-    'Sem teto': false,
-    'Animais': false,
-    'Cultura': false,
-    'Ambientais': false,
-    'Saúde': false,
-    'Direitos humanos': false,
-  };
+  Map<String, bool> categories = categoriasFiltro;  // constante para as categorias presente no filtro 
+
 
   double distance = 0;
   bool isOngOpen = false;
