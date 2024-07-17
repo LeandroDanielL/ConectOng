@@ -1,5 +1,5 @@
-import 'package:fluther/postss/post2.dart';
-import 'package:fluther/postss/post4.dart';
+import 'package:fluther/posts/post2.dart';
+import 'package:fluther/posts/post4.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage2 extends StatefulWidget {

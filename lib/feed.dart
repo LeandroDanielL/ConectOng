@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluther/login.dart';
-import 'package:fluther/postss/post5.dart';
+import 'package:fluther/posts/post5.dart';
 import 'package:fluther/servicos/autenticacao_servicos.dart';
 import 'package:flutter/material.dart';
 import 'filtro.dart';
@@ -10,15 +10,15 @@ import 'perfis/perfilpage2.dart';
 import 'perfis/perfilpage3.dart';
 import 'perfis/perfilpage4.dart';
 import 'perfis/perfilpage5.dart';
-import 'postss/post1.dart';
-import 'postss/post2.dart';
-import 'postss/post6.dart';
-import 'postss/post7.dart';
-import 'postss/post8.dart';
-import 'postss/post9.dart';
-import 'postss/post10.dart';
-import 'postss/post3.dart';
-import 'postss/post4.dart';
+import 'posts/post1.dart';
+import 'posts/post2.dart';
+import 'posts/post6.dart';
+import 'posts/post7.dart';
+import 'posts/post8.dart';
+import 'posts/post9.dart';
+import 'posts/post10.dart';
+import 'posts/post3.dart';
+import 'posts/post4.dart';
 
 class Feed extends StatefulWidget {
   final User user;
